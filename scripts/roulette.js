@@ -37,7 +37,7 @@ const STATE_SPINNING = 1;
 const STATE_SLOW1 = 2;
 const STATE_SLOW2 = 3;
 const STATE_SLOW3 = 4;
-const STATE_RESULT = 4;
+const STATE_RESULT = 5;
 
 let current_state = STATE_READY;
 
@@ -161,9 +161,11 @@ function draw() {
 setInterval(draw, 10);
 
 function triggerSpinningRoulette() {
+    console.log(">>> triggerSpinningRoulette()");
     switch (current_state) {
         case STATE_READY:
         case STATE_RESULT:
+            console.log("    triggerSpinningRoulette(): Start spinning");
             document.getElementById("roulette_triggering_button").textContent = "Stop!";
             document.getElementById("text_you_are").textContent = "_";
             document.getElementById("text_masochist").textContent = "_";
@@ -171,6 +173,7 @@ function triggerSpinningRoulette() {
             indicator_angle_at_switching_state = current_indicator_angle;
             break;
         case STATE_SPINNING:
+            console.log("    triggerSpinningRoulette(): Slow down");
             document.getElementById("roulette_triggering_button").textContent = "抽選中";
             current_state = STATE_SLOW1;
             indicator_angle_at_switching_state = current_indicator_angle;
@@ -179,5 +182,5 @@ function triggerSpinningRoulette() {
             // 何もしない
             break;
     }
-
+    console.log("<<< triggerSpinningRoulette()");
 }
