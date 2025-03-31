@@ -56,12 +56,15 @@ function draw() {
         // まずは点を中心に置く
         CONTEXT.moveTo(CENTER_X, CENTER_Y);
         // 一旦中心から円周に向かって半径を描画して、その後円弧を描く
-        CONTEXT.arc(CENTER_X, CENTER_Y, roulette_radius, i / 8.0 * Math.PI, (i + 1.0) / 8.0 * Math.PI, false);
+        CONTEXT.arc(CENTER_X, CENTER_Y, roulette_radius, i * STEP_ANGLE, (i + 1.0) / 8.0 * Math.PI, false);
         // 円周から中心に向かって半径を描画する。これでパスが閉じて元の位置に戻る。
         CONTEXT.lineTo(CENTER_X, CENTER_Y);
         CONTEXT.fillStyle = "blue";
         CONTEXT.fill();
         CONTEXT.closePath();
+        CONTEXT.fillStyle = "yellow";
+        CONTEXT.font = "20px Arial";
+        CONTEXT.fillText("S", CENTER_X + 2.0 / 3.0 * roulette_radius * Math.cos((i + 0.5) * STEP_ANGLE), CENTER_Y + 2.0 / 3.0 * roulette_radius * Math.sin((i + 0.5) * STEP_ANGLE));
     }
 
     // マゾ用の扇形を描画
@@ -73,12 +76,15 @@ function draw() {
         // まずは点を中心に置く
         CONTEXT.moveTo(CENTER_X, CENTER_Y);
         // 一旦中心から円周に向かって半径を描画して、その後円弧を描く
-        CONTEXT.arc(CENTER_X, CENTER_Y, roulette_radius, i / 8.0 * Math.PI, (i + 1.0) / 8.0 * Math.PI, false);
+        CONTEXT.arc(CENTER_X, CENTER_Y, roulette_radius, i * STEP_ANGLE, (i + 1.0) / 8.0 * Math.PI, false);
         // 円周から中心に向かって半径を描画する。これでパスが閉じて元の位置に戻る。
         CONTEXT.lineTo(CENTER_X, CENTER_Y);
         CONTEXT.fillStyle = "red";
         CONTEXT.fill();
         CONTEXT.closePath();
+        CONTEXT.fillStyle = "green";
+        CONTEXT.font = "20px Arial";
+        CONTEXT.fillText("M", CENTER_X + 2.0 / 3.0 * roulette_radius * Math.cos((i + 0.5) * STEP_ANGLE), CENTER_Y + 2.0 / 3.0 * roulette_radius * Math.sin((i + 0.5) * STEP_ANGLE));
     }
 
     switch (current_state) {
