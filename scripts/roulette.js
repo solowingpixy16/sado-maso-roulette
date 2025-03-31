@@ -25,9 +25,10 @@ if (ROULETTE_CANVAS.clientWidth <= ROULETTE_CANVAS.clientHeight) {
 const INDICATOR_CIRCLE_RADIUS = 10;
 const INDICATOR_ORBIT_RADIUS = roulette_radius + 10;
 const INDICATOR_SPEED_STANDARD = 0.02;
-const INDICATOR_SPEED_SLOW1 = 0.01;
-const INDICATOR_SPEED_SLOW2 = 0.01;
+const INDICATOR_SPEED_SLOW1 = 0.02;
+const INDICATOR_SPEED_SLOW2 = 0.015;
 const INDICATOR_SPEED_SLOW3 = 0.01;
+const INDICATOR_SPEED_SLOW4 = 0.005;
 
 const PIECES_COUNT = 16;
 const STEP_ANGLE = 2.0 * Math.PI / PIECES_COUNT;
@@ -37,11 +38,12 @@ const STATE_SPINNING = 1;
 const STATE_SLOW1 = 2;
 const STATE_SLOW2 = 3;
 const STATE_SLOW3 = 4;
-const STATE_RESULT = 5;
+const STATE_SLOW4 = 5;
+const STATE_RESULT = 6;
 
 let current_state = STATE_READY;
 
-const INDICATOR_STANDBY_ANGLE = - 1.0/2.0 * Math.PI;
+const INDICATOR_STANDBY_ANGLE = 3.0/2.0 * Math.PI;
 let current_indicator_angle = INDICATOR_STANDBY_ANGLE;
 let indicator_angle_at_switching_state = INDICATOR_STANDBY_ANGLE;
 const INDICATOR_BRAKE_REACTION_ANGLE = 1.0 / 4.0 * Math.PI;
@@ -91,12 +93,10 @@ function draw() {
                 current_indicator_angle += INDICATOR_SPEED_SLOW1;
 
                 let threshold = indicator_angle_at_switching_state + INDICATOR_BRAKE_REACTION_ANGLE;
-                if (threshold >= 2.0 * Math.PI) { // ここの浮動小数点演算の誤差でバグりそう
-                    threshold -= 2.0 * Math.PI;
-                }
                 if (current_indicator_angle >= threshold) {
                     ++current_state;
-                    indicator_angle_at_switching_state;
+                    indicator_angle_at_switching_state = current_indicator_angle;
+                    console.log("slow1 -->> slow2");
                 }
             }
             break;
@@ -105,30 +105,46 @@ function draw() {
                 current_indicator_angle += INDICATOR_SPEED_SLOW2;
 
                 let threshold = indicator_angle_at_switching_state + INDICATOR_BRAKE_REACTION_ANGLE;
-                if (threshold >= 2.0 * Math.PI) { // ここの浮動小数点演算の誤差でバグりそう
-                    threshold -= 2.0 * Math.PI;
-                }
                 if (current_indicator_angle >= threshold) {
                     ++current_state;
-                    indicator_angle_at_switching_state;
+                    indicator_angle_at_switching_state = current_indicator_angle;
+                    console.log("slow2 -->> slow3");
                 }
             }
             break;
         case STATE_SLOW3:
             {
                 current_indicator_angle += INDICATOR_SPEED_SLOW3;
+
+                let threshold = indicator_angle_at_switching_state + INDICATOR_BRAKE_REACTION_ANGLE;
+                if (current_indicator_angle >= threshold) {
+                    ++current_state;
+                    indicator_angle_at_switching_state = current_indicator_angle;
+                    console.log("slow3 -->> slow4");
+                }
+            }
+            break;
+        case STATE_SLOW4:
+            {
+                current_indicator_angle += INDICATOR_SPEED_SLOW4;
+                let normalized_current_indicator_angle = current_indicator_angle;
+                while (normalized_current_indicator_angle >= 2.0 * Math.PI) {
+                    // ここの計算が最高にバカすぎて論外
+                    normalized_current_indicator_angle -= 2.0 * Math.PI;
+                }
                 let stopping_required = false;
                 for (let angle = 3.0 / 2.0 * STEP_ANGLE; angle < 2.0 * Math.PI; angle += 2.0 * STEP_ANGLE) {
-                    if (angle - STEP_ANGLE / 4.0 <= current_indicator_angle && current_indicator_angle <= angle + STEP_ANGLE / 4.0) {
+                    if (angle - STEP_ANGLE / 4.0 <= normalized_current_indicator_angle && normalized_current_indicator_angle <= angle + STEP_ANGLE / 4.0) {
                         stopping_required = true;
                     }
                 }
                 if (stopping_required) {
                     ++current_state;
-                    indicator_angle_at_switching_state;
+                    indicator_angle_at_switching_state = current_indicator_angle;
                     document.getElementById("roulette_triggering_button").textContent = "Start";
                     document.getElementById("text_you_are").textContent = "あなたは....";
                     document.getElementById("text_masochist").textContent = "クソドMです!!!";
+                    console.log("slow4 -->> result");
                 }
             }
             break;
@@ -137,15 +153,6 @@ function draw() {
         default:
             console.log("This log must not be displayed.");
             break;
-    }
-
-    if (current_indicator_angle < 0) {
-        // -2πより小さい値だったら？みたいなことはいったん無視。じゃないと4月1日に公開できない
-        current_indicator_angle += 2.0 * Math.PI;
-    }
-    if (current_indicator_angle > 2.0 * Math.PI) {
-        // 4πより大きい値だったら？みたいなことはいったん無視。じゃないと4月1日に公開できない
-        current_indicator_angle -= 2.0 * Math.PI;
     }
 
     let current_indicator_x = CENTER_X + INDICATOR_ORBIT_RADIUS * Math.cos(current_indicator_angle);
