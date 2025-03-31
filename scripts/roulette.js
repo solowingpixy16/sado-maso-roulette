@@ -153,7 +153,7 @@ function draw() {
                     indicator_angle_at_switching_state = current_indicator_angle;
                     document.getElementById("roulette_triggering_button").textContent = "Start";
                     document.getElementById("text_you_are").textContent = "あなたは....";
-                    document.getElementById("text_masochist").textContent = "クソドMです!!!";
+                    document.getElementById("text_masochist").textContent = "ドMです!!!";
                     console.log("slow4 -->> result");
                 }
             }
