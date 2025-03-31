@@ -28,6 +28,10 @@
                 display: block;
                 margin: 0 auto;
             }
+            .button_style {
+                display: block;
+                margin: auto;
+            }
         </style>
     </head>
     <body>
@@ -35,6 +39,10 @@
              仕方がないので決め打ちにする -->
         <canvas id="roulette_area" width="480" height="320">
         </canvas>
+        <p id="text_you_are">_</p>
+        <p id="text_masochist">_</p>
+
+        <button id="roulette_triggering_button" onclick="triggerSpinningRoulette()" class="button_style" type="button">Start</button>
         <!-- 左寄せになっててすこぶるダサいが、知らん -->
         <p> "サド/マゾ診断" by solo-wing-pixy is licensed under the Apache License, Version 2.0 </p>
         <script src="./scripts/roulette.js">
