@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+    Copyright 2025 solo-wing-pixy
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<html lang="ja-JP">
+    <head>
+        <meta charset="utf-8" />
+        <title> サド/マゾ診断 by solo-wing-pixy </title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            canvas {
+                background: gray;
+                display: block;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 描画領域を可変にするやり方がよくわからないし、上手く動かん
+             仕方がないので決め打ちにする -->
+        <canvas id="roulette_area" width="480" height="320">
+        </canvas>
+        <!-- 左寄せになっててすこぶるダサいが、知らん -->
+        <p> "サド/マゾ診断" by solo-wing-pixy is licensed under the Apache License, Version 2.0 </p>
+        <script src="./scripts/roulette.js">
+        </script>
+    </body>
+</html>
