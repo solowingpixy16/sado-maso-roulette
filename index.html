@@ -14,6 +14,13 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+
+<!--
+    solo-wing-pixyより：
+        どのタイミングで止めても「ドM」になるように作っておきました。
+        クソしょうもないエイプリルフールネタですみません。
+-->
+
 <html lang="ja-JP">
     <head>
         <meta charset="utf-8" />
@@ -32,6 +39,9 @@
                 display: block;
                 margin: auto;
             }
+            .text_style {
+                text-align: center;
+            }
         </style>
     </head>
     <body>
@@ -39,12 +49,11 @@
              仕方がないので決め打ちにする -->
         <canvas id="roulette_area" width="480" height="320">
         </canvas>
-        <p id="text_you_are">_</p>
-        <p id="text_masochist">_</p>
+        <p id="text_you_are" class="text_style" style="font-size: 20px;">_</p>
+        <p id="text_masochist" class="text_style" style="font-size: 80px;">_</p>
 
-        <button id="roulette_triggering_button" onclick="triggerSpinningRoulette()" class="button_style" type="button">Start</button>
-        <!-- 左寄せになっててすこぶるダサいが、知らん -->
-        <p> "サド/マゾ診断" by solo-wing-pixy is licensed under the Apache License, Version 2.0 </p>
+        <button id="roulette_triggering_button" onclick="triggerSpinningRoulette()" class="button_style" style="font-size: 50px;" type="button">Start</button>
+        <p class="text_style"> "サド/マゾ診断" by solo-wing-pixy is licensed under the Apache License, Version 2.0 </p>
         <script src="./scripts/roulette.js">
         </script>
     </body>

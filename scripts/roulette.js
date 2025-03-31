@@ -10,6 +10,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+// コピペコードだわ、計算ロジック汚いわ、数値が際限なく増加するわで、いろいろダメ。
+// クソコードと叩かれる事を覚悟して公開する。
+
 const ROULETTE_CANVAS = document.getElementById("roulette_area");
 const CONTEXT = ROULETTE_CANVAS.getContext("2d");
 
